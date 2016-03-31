@@ -34,5 +34,32 @@ public class MineFieldBehavior {
 		}
 		assertThat(10, is (mines) );
 	}
+	@Test
+	public void SixBySevenMineFieldNumberOfSquaresIs42(){
+		mineField = new MineField(6,7,10);
+		assertThat(42, is(mineField.getSquares().size() ));
+	}
 	
+	@Test 
+	public void numberOfMinesIs6(){
+		mineField = new MineField(6,7,6);
+		Map squares = mineField.getSquares();
+		int mines = 0;
+		for(Square square : (Collection<Square>)squares.values()){
+			if ( square instanceof MineSquare ) mines++;
+		}
+		assertThat(6, is (mines) );
+	}
+	
+	@Test 
+	public void numberOfMinesIsSameAsSquares(){
+		mineField = new MineField(6,7,42);
+		Map squares = mineField.getSquares();
+		int mines = 0;
+		for(Square square : (Collection<Square>)squares.values()){
+			if ( square instanceof MineSquare ) mines++;
+		}
+		assertThat(42, is (mines) );
+	}
+
 }
