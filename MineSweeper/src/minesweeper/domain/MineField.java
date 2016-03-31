@@ -22,7 +22,7 @@ class MineField {
 
 		defaultAllSquaresToBlank();
 	
-		generateRandomMineLocations(mines);
+		mineLocations = generateRandomMineLocations(mines);
 
 		for(Iterator it = mineLocations.iterator();it.hasNext();) {
 			Integer location = (Integer)it.next();
@@ -121,8 +121,8 @@ class MineField {
 		}
 	}
 
-	private void generateRandomMineLocations(int mines) {
-		mineLocations = new ArrayList(mines);
+	protected List generateRandomMineLocations(int mines) {
+		List mineLocations = new ArrayList(mines);
 		for(int i=0;i<mines;i++) {
 			Integer random = null;
 
@@ -132,6 +132,7 @@ class MineField {
 
 			mineLocations.add(random);
 		}
+		return mineLocations;
 	}
 
 	private void defaultAllSquaresToBlank() {

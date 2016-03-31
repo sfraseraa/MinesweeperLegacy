@@ -2,12 +2,17 @@ package minesweeper.domain;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
+import org.hamcrest.core.IsInstanceOf;
 
 public class MineFieldBehavior {
 
@@ -21,7 +26,7 @@ public class MineFieldBehavior {
 	@Test
 	public void defaultNumberOfSquaresIs100() {
 		
-		assertThat (100, is(mineField.getSquares().size()));
+		assertThat (mineField.getSquares().size(), is(100));
 		
 	}
 	
@@ -32,7 +37,7 @@ public class MineFieldBehavior {
 		for(Square square : (Collection<Square>)squares.values()){
 			if ( square instanceof MineSquare ) mines++;
 		}
-		assertThat(10, is (mines) );
+		assertThat(mines, is (10) );
 	}
 	@Test
 	public void SixBySevenMineFieldNumberOfSquaresIs42(){
@@ -48,7 +53,7 @@ public class MineFieldBehavior {
 		for(Square square : (Collection<Square>)squares.values()){
 			if ( square instanceof MineSquare ) mines++;
 		}
-		assertThat(6, is (mines) );
+		assertThat(mines, is (6) );
 	}
 	
 	@Test 
@@ -59,7 +64,24 @@ public class MineFieldBehavior {
 		for(Square square : (Collection<Square>)squares.values()){
 			if ( square instanceof MineSquare ) mines++;
 		}
-		assertThat(42, is (mines) );
+		assertThat(mines, is (42) );
+	}
+	
+	@Test
+	public void mineFieldMineAndNumberSquaresAreCalculated(){
+		mineField = new MineField(){
+			public List generateRandomMineLocations(int mines){
+				return Arrays.asList(new Integer[]{
+						32,33,34,42,44,53,37,46,64,88
+						
+				});
+			}
+		};
+		Map squares = mineField.getSquares();
+		assertThat(squares.get(new Integer(32)), instanceOf( MineSquare.class) );
+		assertThat(squares.get(new Integer(22)), instanceOf( NumberSquare.class) );
+		assertThat(squares.get(new Integer(12)), instanceOf( BlankSquare.class) );
+		
 	}
 
 }
