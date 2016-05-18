@@ -17,17 +17,7 @@ class MineField {
 			squares.put(new Integer(i),new BlankSquare(i));
 		}
 
-		List mineLocs = new ArrayList(numberOfMines);
-		//Generate Random mine locations	
-		for(int i=0;i<numberOfMines;i++) {
-			Integer random = null;
-
-			do {
-				random = new Integer((int)(Math.random()*numberOfSquares));
-			}while(mineLocs.contains(random));
-
-			mineLocs.add(random);
-		}
+		List mineLocs = generateMineLocations();
 		
 		mineLocations = mineLocs;
 		// Add Mine Squares
@@ -133,6 +123,21 @@ class MineField {
 				square.addNeighbor((Square)(squares.get((Integer)it.next())));
 			}
 		}
+	}
+
+	protected List generateMineLocations() {
+		List mineLocs = new ArrayList(numberOfMines);
+		//Generate Random mine locations	
+		for(int i=0;i<numberOfMines;i++) {
+			Integer random = null;
+
+			do {
+				random = new Integer((int)(Math.random()*numberOfSquares));
+			}while(mineLocs.contains(random));
+
+			mineLocs.add(random);
+		}
+		return mineLocs;
 	}
 
 	void uncoverMineSquares() {
