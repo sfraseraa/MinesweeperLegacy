@@ -121,4 +121,32 @@ public class CreateMineFieldTests {
 		assertEquals( 2, ((NumberSquare)squaresMap.get(31)).getValue());
 
 	}
+	
+	
+	@Test
+	public void twentyByTwentyFieldShouldBuildMinefield(){
+		MineField subject = new TestReplacingMinefieldConstructor(20, 20, 10);
+
+		Map squaresMap = subject.getSquares();
+		
+		assertTrue( squaresMap.get(32) instanceof MineSquare);
+		assertTrue( squaresMap.get(31) instanceof NumberSquare);
+		assertTrue( squaresMap.get(30) instanceof BlankSquare);
+		assertEquals( 1, ((NumberSquare)squaresMap.get(31)).getValue());
+
+	}
+	
+	@Test
+	public void thirtyByTenFieldShouldBuildMinefield(){
+		MineField subject = new TestReplacingMinefieldConstructor(30, 10, 10);
+
+		Map squaresMap = subject.getSquares();
+		
+		assertTrue( squaresMap.get(32) instanceof MineSquare);
+		assertTrue( squaresMap.get(31) instanceof NumberSquare);
+		assertTrue( squaresMap.get(30) instanceof BlankSquare);
+		assertEquals( 1, ((NumberSquare)squaresMap.get(31)).getValue());
+
+	}
+	
 }
