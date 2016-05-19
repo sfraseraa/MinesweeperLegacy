@@ -3,6 +3,7 @@ package minesweeper.domain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -165,4 +166,76 @@ public class CreateMineFieldTests {
 		}
 		assertEquals(10, mineCount);
 	}
+	
+// replacing tests
+	
+	private class TestNumberGenerator extends NumberGenerator{
+		Integer numbers[];
+		
+		TestNumberGenerator(Integer[] values){
+			super(values.length);
+			numbers = values;
+		}
+		public List generateMineLocations(int numberOfSquares) {
+			return Arrays.asList(numbers);
+		}
+	}
+	
+	
+	@Test
+	public void shouldCalculateTypesOfSquaresFromMineSquares2(){
+		MineField subject = new MineField(10,10, 
+				new TestNumberGenerator(new Integer[]{
+						32,33,34,42,44,53,37,46,64,88
+				}));
+		
+		
+		Map squaresMap = subject.getSquares();
+		
+		assertTrue( squaresMap.get(32) instanceof MineSquare);
+		assertTrue( squaresMap.get(31) instanceof NumberSquare);
+		assertTrue( squaresMap.get(30) instanceof BlankSquare);
+		assertEquals( 2, ((NumberSquare)squaresMap.get(31)).getValue());
+		
+	}
+	
+	@Test
+	public void shouldHaveNoMinesWhenNoNumbersGenerated2(){
+		MineField subject = new MineField(10,10, 
+			new TestNumberGenerator(new Integer[]{}));
+		
+		Map squaresMap = subject.getSquares();
+		
+		int mineCount = 0;
+		for( Object square :  squaresMap.values() ){
+			if( square instanceof MineSquare ){
+				mineCount++;
+			}
+		}
+		assertEquals(0, mineCount);
+	}
+	
+	@Test
+	public void shouldHaveAllMinesWhen100NumbersGenerated2(){
+		
+		Integer allSquaresMines[] = new Integer[100];
+		for( int i=0; i<100; i++){
+			allSquaresMines[i]=i;
+		}
+		MineField subject = new MineField(10,10, 
+				new TestNumberGenerator(allSquaresMines));
+			
+		Map squaresMap = subject.getSquares();
+		
+		int mineCount = 0;
+		for( Object square :  squaresMap.values() ){
+			if( square instanceof MineSquare ){
+				mineCount++;
+			}
+		}
+		assertEquals(100, mineCount);
+	}
+
+	
+	
 }
