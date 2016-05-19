@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MineSweeperTest {
+public class CreateMineFieldTests {
 
 	@Before
 	public void setUp() throws Exception {
