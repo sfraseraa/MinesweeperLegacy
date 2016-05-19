@@ -3,13 +3,21 @@ import java.util.*;
 
 class MineField {
 
-	private int boardWidth = 10;
-	private int numberOfMines = 10;
-	private int numberOfSquares = 100;
+	private int boardWidth;
+	private int numberOfMines;
+	private int numberOfSquares;
 	private Map squares;
 	private List mineLocations; 
 
-	MineField() { 
+	public MineField() {
+		this(10,10,10);
+	}
+	
+	MineField(int width, int height, int mines) {
+		boardWidth = width;
+		numberOfSquares = width*height;
+		numberOfMines = mines;
+		
 		squares = new HashMap(numberOfSquares);
 
 		//Default all square to blank

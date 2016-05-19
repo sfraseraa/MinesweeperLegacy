@@ -98,5 +98,27 @@ public class MineSweeperTest {
 		assertEquals(100, mineCount);
 	}
 	
+	private class TestReplacingMinefieldConstructor extends MineField {
+		public TestReplacingMinefieldConstructor(int width, int height, int mines){
+			super(width, height, mines);
+		}
+		public List generateMineLocations(){
+			return Arrays.asList(new Integer[]{
+					32,33,34,42,44,53,37,46,64,88
+			});
+		}
+	}
 	
+	@Test
+	public void defaultParamtersOfConstructorShouldBuildMineField(){
+		MineField subject = new TestReplacingMinefieldConstructor(10, 10, 10);
+
+		Map squaresMap = subject.getSquares();
+		
+		assertTrue( squaresMap.get(32) instanceof MineSquare);
+		assertTrue( squaresMap.get(31) instanceof NumberSquare);
+		assertTrue( squaresMap.get(30) instanceof BlankSquare);
+		assertEquals( 2, ((NumberSquare)squaresMap.get(31)).getValue());
+
+	}
 }
