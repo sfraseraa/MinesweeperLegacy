@@ -149,4 +149,20 @@ public class CreateMineFieldTests {
 
 	}
 	
+	@Test
+	public void passInRandomGenerator(){
+		NumberGenerator numberGenerator = new NumberGenerator(10);
+		
+		MineField subject = new MineField(10,10, numberGenerator);
+		Map squaresMap = subject.getSquares();
+		
+		assertEquals( 100, subject.getSquares().size());
+		int mineCount = 0;
+		for( Object square :  squaresMap.values() ){
+			if( square instanceof MineSquare ){
+				mineCount++;
+			}
+		}
+		assertEquals(10, mineCount);
+	}
 }

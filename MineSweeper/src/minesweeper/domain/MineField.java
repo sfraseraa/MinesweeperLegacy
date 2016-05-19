@@ -4,19 +4,22 @@ import java.util.*;
 class MineField {
 
 	private int boardWidth;
-	private int numberOfMines;
 	private int numberOfSquares;
 	private Map squares;
 	private List mineLocations; 
+	NumberGenerator numberGenerator;
 
 	public MineField() {
 		this(10,10,10);
 	}
 	
-	MineField(int width, int height, int mines) {
+	public MineField(int width, int height, int mines) {
+		this(width,height,new NumberGenerator(mines));
+	}
+	public MineField(int width, int height, NumberGenerator numberGenerator) {
 		boardWidth = width;
 		numberOfSquares = width*height;
-		numberOfMines = mines;
+		this.numberGenerator = numberGenerator;
 		
 		squares = new HashMap(numberOfSquares);
 
@@ -134,18 +137,9 @@ class MineField {
 	}
 
 	protected List generateMineLocations() {
-		List mineLocs = new ArrayList(numberOfMines);
-		//Generate Random mine locations	
-		for(int i=0;i<numberOfMines;i++) {
-			Integer random = null;
-
-			do {
-				random = new Integer((int)(Math.random()*numberOfSquares));
-			}while(mineLocs.contains(random));
-
-			mineLocs.add(random);
-		}
-		return mineLocs;
+		
+		return numberGenerator.generateMineLocations(numberOfSquares);
+		
 	}
 
 	void uncoverMineSquares() {
